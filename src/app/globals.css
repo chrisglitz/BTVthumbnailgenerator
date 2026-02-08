@@ -463,7 +463,7 @@ body {
   pointer-events: none;
 }
 
-/* Villager Character */
+/* Ben The Villager Character */
 .villager-character {
   position: relative;
   width: 120px;
@@ -478,71 +478,90 @@ body {
   transform: translateX(-50%);
   width: 64px;
   height: 64px;
-  background: linear-gradient(180deg, #D4A574 0%, #C4956A 50%, #B4855A 100%);
-  border: 4px solid #8B6914;
+  background: linear-gradient(180deg, #E8D4C4 0%, #DFC4B0 100%);
+  border: 4px solid #1a1a1a;
   box-shadow:
     inset 4px 4px 0 rgba(255, 255, 255, 0.2),
     inset -4px -4px 0 rgba(0, 0, 0, 0.2);
   animation: villager-idle 2s ease-in-out infinite;
+  overflow: visible;
 }
 
+/* Cyan hair with red streaks */
 .villager-head::before {
   content: '';
   position: absolute;
-  top: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 72px;
-  height: 20px;
-  background: linear-gradient(180deg, #5D9B47 0%, #4A8039 100%);
-  border: 3px solid #3D6B2E;
-  border-radius: 2px;
+  top: -8px;
+  left: -4px;
+  right: -4px;
+  height: 32px;
+  background: linear-gradient(90deg,
+    #5BCEFA 0%,
+    #5BCEFA 30%,
+    #FF6B6B 35%,
+    #5BCEFA 40%,
+    #5BCEFA 60%,
+    #FF6B6B 65%,
+    #5BCEFA 70%,
+    #5BCEFA 100%
+  );
+  border: 3px solid #1a1a1a;
+  border-bottom: none;
+}
+
+/* Red and white headband */
+.villager-head::after {
+  content: '';
+  position: absolute;
+  top: 16px;
+  left: -6px;
+  right: -6px;
+  height: 10px;
+  background: linear-gradient(90deg, #FF4444 0%, #FF4444 50%, #FFFFFF 50%, #FFFFFF 100%);
+  border: 2px solid #1a1a1a;
 }
 
 .villager-nose {
-  position: absolute;
-  top: 28px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 16px;
-  height: 24px;
-  background: linear-gradient(180deg, #C4956A 0%, #A4754A 100%);
-  border: 2px solid #8B6914;
+  display: none;
 }
 
 .villager-eyes {
   position: absolute;
-  top: 24px;
+  top: 32px;
   left: 50%;
   transform: translateX(-50%);
-  width: 40px;
+  width: 36px;
   display: flex;
   justify-content: space-between;
+  z-index: 2;
 }
 
 .villager-eye {
-  width: 8px;
-  height: 8px;
-  background: #2a2a2a;
+  width: 10px;
+  height: 10px;
+  background: #4A90D9;
+  border: 2px solid #1a1a1a;
   animation: blink 4s ease-in-out infinite;
 }
 
 .villager-eyebrow {
   position: absolute;
-  top: 18px;
-  width: 12px;
+  top: 26px;
+  width: 14px;
   height: 4px;
-  background: #5D4E37;
+  background: #5BCEFA;
+  z-index: 3;
 }
 
 .villager-eyebrow.left {
-  left: 8px;
+  left: 6px;
 }
 
 .villager-eyebrow.right {
-  right: 8px;
+  right: 6px;
 }
 
+/* Black jacket with red accent */
 .villager-body {
   position: absolute;
   top: 60px;
@@ -550,20 +569,20 @@ body {
   transform: translateX(-50%);
   width: 48px;
   height: 56px;
-  background: linear-gradient(180deg, #8B6914 0%, #725510 50%, #5A440D 100%);
-  border: 4px solid #3D2E0A;
+  background: linear-gradient(180deg, #1a1a1a 0%, #2a2a2a 100%);
+  border: 4px solid #0a0a0a;
 }
 
+/* Red stripe on jacket */
 .villager-body::before {
   content: '';
   position: absolute;
-  top: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 32px;
-  height: 16px;
-  background: #D4D4D4;
-  border: 2px solid #888;
+  top: 0;
+  right: 0;
+  width: 16px;
+  height: 100%;
+  background: linear-gradient(180deg, #FF4444 0%, #CC3333 100%);
+  border-left: 2px solid #1a1a1a;
 }
 
 .villager-arms {
@@ -576,19 +595,27 @@ body {
   justify-content: space-between;
 }
 
+/* Black sleeves matching jacket */
 .villager-arm {
   width: 16px;
   height: 40px;
-  background: linear-gradient(180deg, #8B6914 0%, #5A440D 100%);
-  border: 3px solid #3D2E0A;
+  background: linear-gradient(180deg, #1a1a1a 0%, #2a2a2a 100%);
+  border: 3px solid #0a0a0a;
   animation: arm-wave 1.5s ease-in-out infinite;
   transform-origin: top center;
 }
 
-.villager-arm.right {
-  animation-delay: 0.2s;
+.villager-arm.left {
+  background: linear-gradient(180deg, #1a1a1a 0%, #2a2a2a 100%);
 }
 
+.villager-arm.right {
+  animation-delay: 0.2s;
+  background: linear-gradient(180deg, #FF4444 0%, #CC3333 100%);
+  border-color: #991111;
+}
+
+/* Dark pants */
 .villager-legs {
   position: absolute;
   top: 112px;
@@ -602,8 +629,8 @@ body {
 .villager-leg {
   width: 16px;
   height: 32px;
-  background: linear-gradient(180deg, #5D9B47 0%, #3D6B2E 100%);
-  border: 3px solid #2D5B1E;
+  background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+  border: 3px solid #0a0a0a;
 }
 
 @keyframes villager-idle {
