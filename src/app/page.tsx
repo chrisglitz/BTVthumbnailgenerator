@@ -85,6 +85,71 @@ export default function Home() {
 
       {/* Main content layer */}
       <div className="relative z-10">
+        {/* Subscribe Banner */}
+        <div className="subscribe-banner px-4 py-6 md:py-8">
+          {/* Sparkle effects */}
+          <div className="sparkle" />
+          <div className="sparkle" />
+          <div className="sparkle" />
+          <div className="sparkle" />
+          <div className="sparkle" />
+          <div className="sparkle" />
+
+          <div className="mx-auto max-w-5xl flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 relative z-10">
+            {/* Villager Character */}
+            <div className="villager-character hidden sm:block">
+              <div className="villager-head">
+                <div className="villager-nose" />
+                <div className="villager-eyes">
+                  <div className="villager-eye" />
+                  <div className="villager-eye" />
+                </div>
+                <div className="villager-eyebrow left" />
+                <div className="villager-eyebrow right" />
+              </div>
+              <div className="villager-body" />
+              <div className="villager-arms">
+                <div className="villager-arm left" />
+                <div className="villager-arm right" />
+              </div>
+              <div className="villager-legs">
+                <div className="villager-leg" />
+                <div className="villager-leg" />
+              </div>
+            </div>
+
+            {/* Text Content */}
+            <div className="text-center md:text-left flex-1">
+              <div className="flex items-center justify-center md:justify-start gap-3 mb-2">
+                <span className="bell-icon">&#x1F514;</span>
+                <span className="subscribe-text">SUBSCRIBE TO</span>
+                <span className="bell-icon" style={{ animationDelay: '0.25s' }}>&#x1F514;</span>
+              </div>
+              <div className="channel-name mb-3">
+                BEN THE VILLAGER!
+              </div>
+              <a
+                href="https://youtube.com/@benhive"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="channel-url group"
+              >
+                <span className="yt-button" />
+                <span>youtube.com/@benhive</span>
+                <span className="arrow-bounce">&#x279C;</span>
+              </a>
+            </div>
+
+            {/* Right side bee */}
+            <div className="hidden lg:flex flex-col items-center gap-2">
+              <span className="text-6xl bee-icon">&#x1F41D;</span>
+              <span className="text-sm text-[#FFD700]/60" style={{ fontFamily: 'VT323, monospace' }}>
+                JOIN THE HIVE!
+              </span>
+            </div>
+          </div>
+        </div>
+
         {/* Header */}
         <header className="border-b-4 border-[#FFD700]/30 bg-gradient-to-r from-[#1a1a2e]/95 via-[#2a2a3e]/95 to-[#1a1a2e]/95 backdrop-blur-md">
           <div className="mx-auto max-w-5xl px-4 py-6 flex items-center justify-between">
@@ -105,13 +170,6 @@ export default function Home() {
                 <span className="text-[#FFD700] font-bold">@benhive</span>{" "}
                 branding
               </p>
-            </div>
-            <div className="hidden sm:flex items-center gap-3 animate-fade-in-delay-1">
-              <div className="mc-panel px-4 py-2 text-sm">
-                <span className="text-[#FFD700]/80" style={{ fontFamily: 'VT323, monospace' }}>
-                  &#x26A1; Powered by OpenAI
-                </span>
-              </div>
             </div>
           </div>
         </header>
