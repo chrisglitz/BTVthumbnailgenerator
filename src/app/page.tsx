@@ -68,213 +68,257 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-950 via-purple-950 to-gray-950 text-white">
-      {/* Header */}
-      <header className="border-b border-purple-500/20 bg-black/30 backdrop-blur-sm">
-        <div className="mx-auto max-w-5xl px-4 py-5 flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">
-              <span className="text-purple-400">BenTheVillager&apos;s</span>{" "}
-              Thumbnail Generator
-            </h1>
-            <p className="text-sm text-gray-400 mt-1">
-              AI-powered YouTube thumbnails with{" "}
-              <span className="text-purple-300 font-semibold">@benhive</span>{" "}
-              branding
-            </p>
-          </div>
-          <div className="hidden sm:block text-right">
-            <span className="text-xs text-gray-500 bg-gray-800 px-3 py-1 rounded-full">
-              Powered by OpenAI
-            </span>
-          </div>
-        </div>
-      </header>
+    <main className="min-h-screen relative">
+      {/* Animated honeycomb background */}
+      <div className="honeycomb-bg" />
 
-      {/* Main Content */}
-      <div className="mx-auto max-w-5xl px-4 py-10">
-        {/* URL Input Section */}
-        <section className="bg-gray-900/60 border border-gray-700/50 rounded-2xl p-6 md:p-8 backdrop-blur-sm">
-          <label
-            htmlFor="youtube-url"
-            className="block text-sm font-medium text-gray-300 mb-3"
-          >
-            Paste a YouTube video URL
-          </label>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <input
-              id="youtube-url"
-              type="url"
-              placeholder="https://www.youtube.com/watch?v=..."
-              value={youtubeUrl}
-              onChange={(e) => setYoutubeUrl(e.target.value)}
-              onKeyDown={(e) =>
-                e.key === "Enter" && !loading && handleGenerate()
-              }
-              className="flex-1 rounded-xl bg-gray-800 border border-gray-600 px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-              disabled={loading}
-            />
-            <button
-              onClick={handleGenerate}
-              disabled={loading}
-              className="px-8 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 disabled:bg-gray-700 disabled:cursor-not-allowed font-semibold transition-all text-sm uppercase tracking-wider whitespace-nowrap"
-            >
-              {loading ? (
-                <span className="flex items-center justify-center gap-2">
-                  <svg
-                    className="animate-spin h-4 w-4"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    />
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-                    />
-                  </svg>
-                  Generating...
-                </span>
-              ) : (
-                "Generate Thumbnail"
-              )}
-            </button>
-          </div>
-
-          {error && (
-            <div className="mt-4 p-3 bg-red-900/40 border border-red-700/50 rounded-lg text-red-300 text-sm">
-              {error}
-            </div>
-          )}
-        </section>
-
-        {/* Result Section */}
-        {imageUrl && (
-          <section className="mt-8 bg-gray-900/60 border border-gray-700/50 rounded-2xl p-6 md:p-8 backdrop-blur-sm">
-            {videoTitle && (
-              <h2 className="text-lg font-semibold text-gray-200 mb-4">
-                Thumbnail for:{" "}
-                <span className="text-purple-300">{videoTitle}</span>
-              </h2>
-            )}
-
-            {/* Thumbnail Preview */}
-            <div className="relative rounded-xl overflow-hidden border border-gray-700/50 bg-black">
-              <div className="aspect-video relative">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={imageUrl}
-                  alt="Generated YouTube thumbnail"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-
-            {/* Dimensions info */}
-            <p className="mt-3 text-xs text-gray-500 text-center">
-              Generated at 1792x1024 &mdash; YouTube recommended thumbnail size
-              is 1280x720 (16:9)
-            </p>
-
-            {/* Action Buttons */}
-            <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
-              <button
-                onClick={handleDownload}
-                className="px-6 py-3 rounded-xl bg-green-600 hover:bg-green-500 font-semibold transition-all text-sm uppercase tracking-wider flex items-center justify-center gap-2"
-              >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                  />
-                </svg>
-                Download Thumbnail
-              </button>
-              <button
-                onClick={handleRegenerate}
-                disabled={loading}
-                className="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 disabled:bg-gray-700 disabled:cursor-not-allowed font-semibold transition-all text-sm uppercase tracking-wider flex items-center justify-center gap-2"
-              >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                  />
-                </svg>
-                Regenerate
-              </button>
-            </div>
-          </section>
-        )}
-
-        {/* How it works */}
-        {!imageUrl && !loading && (
-          <section className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-gray-900/40 border border-gray-700/30 rounded-xl p-5 text-center">
-              <div className="w-10 h-10 bg-purple-600/20 rounded-lg flex items-center justify-center mx-auto mb-3">
-                <span className="text-purple-400 text-lg font-bold">1</span>
-              </div>
-              <h3 className="font-semibold text-gray-200 mb-1">
-                Paste a URL
-              </h3>
-              <p className="text-sm text-gray-500">
-                Drop any YouTube video link into the input field above
-              </p>
-            </div>
-            <div className="bg-gray-900/40 border border-gray-700/30 rounded-xl p-5 text-center">
-              <div className="w-10 h-10 bg-purple-600/20 rounded-lg flex items-center justify-center mx-auto mb-3">
-                <span className="text-purple-400 text-lg font-bold">2</span>
-              </div>
-              <h3 className="font-semibold text-gray-200 mb-1">
-                AI Generates
-              </h3>
-              <p className="text-sm text-gray-500">
-                OpenAI creates a custom thumbnail with &quot;Ben The
-                Villager&quot; and &quot;@benhive&quot; branding
-              </p>
-            </div>
-            <div className="bg-gray-900/40 border border-gray-700/30 rounded-xl p-5 text-center">
-              <div className="w-10 h-10 bg-purple-600/20 rounded-lg flex items-center justify-center mx-auto mb-3">
-                <span className="text-purple-400 text-lg font-bold">3</span>
-              </div>
-              <h3 className="font-semibold text-gray-200 mb-1">
-                Download or Retry
-              </h3>
-              <p className="text-sm text-gray-500">
-                Download the thumbnail or regenerate until you find the perfect
-                one
-              </p>
-            </div>
-          </section>
-        )}
+      {/* Floating bee particles */}
+      <div className="particle-field">
+        <span className="particle">&#x1F41D;</span>
+        <span className="particle">&#x2B22;</span>
+        <span className="particle">&#x1F41D;</span>
+        <span className="particle">&#x2B22;</span>
+        <span className="particle">&#x1F41D;</span>
+        <span className="particle">&#x2B22;</span>
+        <span className="particle">&#x1F41D;</span>
       </div>
 
-      {/* Footer */}
-      <footer className="border-t border-gray-800 mt-16 py-6 text-center text-xs text-gray-600">
-        BenTheVillager&apos;s Thumbnail Generator &mdash; Built with Next.js
-        &amp; OpenAI
-      </footer>
+      {/* Main content layer */}
+      <div className="relative z-10">
+        {/* Header */}
+        <header className="border-b-4 border-[#FFD700]/30 bg-gradient-to-r from-[#1a1a2e]/95 via-[#2a2a3e]/95 to-[#1a1a2e]/95 backdrop-blur-md">
+          <div className="mx-auto max-w-5xl px-4 py-6 flex items-center justify-between">
+            <div className="animate-fade-in">
+              <div className="flex items-center gap-3">
+                <span className="bee-icon text-4xl">&#x1F41D;</span>
+                <div>
+                  <h1 className="text-2xl md:text-3xl font-bold tracking-wide title-animated">
+                    BenTheVillager&apos;s
+                  </h1>
+                  <h2 className="text-xl md:text-2xl font-bold text-white/90" style={{ textShadow: '2px 2px 0 #000' }}>
+                    Thumbnail Generator
+                  </h2>
+                </div>
+              </div>
+              <p className="text-sm text-[#FFD700]/70 mt-2 tracking-wide" style={{ fontFamily: 'VT323, monospace' }}>
+                AI-powered thumbnails with{" "}
+                <span className="text-[#FFD700] font-bold">@benhive</span>{" "}
+                branding
+              </p>
+            </div>
+            <div className="hidden sm:flex items-center gap-3 animate-fade-in-delay-1">
+              <div className="mc-panel px-4 py-2 text-sm">
+                <span className="text-[#FFD700]/80" style={{ fontFamily: 'VT323, monospace' }}>
+                  &#x26A1; Powered by OpenAI
+                </span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {/* Main Content */}
+        <div className="mx-auto max-w-5xl px-4 py-10">
+          {/* URL Input Section */}
+          <section className="mc-panel p-6 md:p-8 animate-fade-in-delay-1">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-8 h-8 bg-gradient-to-br from-[#FFD700] to-[#E87E04] flex items-center justify-center" style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}>
+                <span className="text-[#1a1a2e] font-bold text-sm">1</span>
+              </div>
+              <label
+                htmlFor="youtube-url"
+                className="text-lg font-bold glow-text"
+                style={{ fontFamily: 'VT323, monospace', letterSpacing: '0.1em' }}
+              >
+                PASTE A YOUTUBE URL
+              </label>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4">
+              <input
+                id="youtube-url"
+                type="url"
+                placeholder="https://www.youtube.com/watch?v=..."
+                value={youtubeUrl}
+                onChange={(e) => setYoutubeUrl(e.target.value)}
+                onKeyDown={(e) =>
+                  e.key === "Enter" && !loading && handleGenerate()
+                }
+                className="mc-input flex-1 w-full"
+                disabled={loading}
+              />
+              <button
+                onClick={handleGenerate}
+                disabled={loading}
+                className="mc-button mc-button-primary whitespace-nowrap"
+              >
+                {loading ? (
+                  <span className="flex items-center justify-center gap-3">
+                    <div className="w-5 h-5 border-2 border-[#1a1a2e] border-t-transparent animate-spin" style={{ borderRadius: '0' }} />
+                    CRAFTING...
+                  </span>
+                ) : (
+                  <>&#x2699; GENERATE</>
+                )}
+              </button>
+            </div>
+
+            {error && (
+              <div className="error-shake mt-4 p-4 bg-red-900/60 border-4 border-red-700 text-red-200" style={{ fontFamily: 'VT323, monospace', fontSize: '1.1rem' }}>
+                &#x26A0; {error}
+              </div>
+            )}
+          </section>
+
+          {/* Loading State */}
+          {loading && (
+            <section className="mt-8 mc-panel p-8 text-center animate-fade-in">
+              <div className="flex flex-col items-center gap-6">
+                <div className="relative">
+                  <div className="mc-spinner" />
+                  <span className="absolute -top-2 -right-2 text-2xl bee-icon">&#x1F41D;</span>
+                </div>
+                <div>
+                  <p className="text-[#FFD700] text-xl" style={{ fontFamily: 'VT323, monospace' }}>
+                    THE BEES ARE WORKING ON YOUR THUMBNAIL...
+                  </p>
+                  <p className="text-white/50 text-sm mt-2" style={{ fontFamily: 'VT323, monospace' }}>
+                    This may take a moment
+                  </p>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* Result Section */}
+          {imageUrl && !loading && (
+            <section className="mt-8 mc-panel p-6 md:p-8 animate-fade-in">
+              {videoTitle && (
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="text-2xl">&#x1F3AC;</span>
+                  <h2 className="text-lg font-bold text-white/90" style={{ fontFamily: 'VT323, monospace' }}>
+                    THUMBNAIL FOR:{" "}
+                    <span className="text-[#FFD700]">{videoTitle}</span>
+                  </h2>
+                </div>
+              )}
+
+              {/* Thumbnail Preview */}
+              <div className="pixel-frame">
+                <div className="aspect-video relative bg-black">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={imageUrl}
+                    alt="Generated YouTube thumbnail"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+
+              {/* Dimensions info */}
+              <p className="mt-4 text-center text-[#FFD700]/60" style={{ fontFamily: 'VT323, monospace' }}>
+                &#x1F4D0; 1792x1024 &mdash; YouTube recommends 1280x720 (16:9)
+              </p>
+
+              {/* Action Buttons */}
+              <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
+                <button
+                  onClick={handleDownload}
+                  className="mc-button mc-button-green"
+                >
+                  <span className="flex items-center justify-center gap-2">
+                    &#x2B07; DOWNLOAD
+                  </span>
+                </button>
+                <button
+                  onClick={handleRegenerate}
+                  disabled={loading}
+                  className="mc-button mc-button-primary"
+                >
+                  <span className="flex items-center justify-center gap-2">
+                    &#x1F504; REGENERATE
+                  </span>
+                </button>
+              </div>
+            </section>
+          )}
+
+          {/* How it works */}
+          {!imageUrl && !loading && (
+            <section className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="step-card mc-panel p-6 text-center animate-fade-in-delay-1">
+                <div className="w-14 h-14 mx-auto mb-4 bg-gradient-to-br from-[#FFD700] to-[#E87E04] flex items-center justify-center" style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}>
+                  <span className="text-[#1a1a2e] font-bold text-2xl">1</span>
+                </div>
+                <h3 className="font-bold text-[#FFD700] text-lg mb-2" style={{ fontFamily: 'VT323, monospace', letterSpacing: '0.1em' }}>
+                  PASTE URL
+                </h3>
+                <p className="text-white/60 text-sm" style={{ fontFamily: 'VT323, monospace' }}>
+                  Drop any YouTube video link into the input above
+                </p>
+              </div>
+
+              <div className="step-card mc-panel p-6 text-center animate-fade-in-delay-2">
+                <div className="w-14 h-14 mx-auto mb-4 bg-gradient-to-br from-[#FFD700] to-[#E87E04] flex items-center justify-center" style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}>
+                  <span className="text-[#1a1a2e] font-bold text-2xl">2</span>
+                </div>
+                <h3 className="font-bold text-[#FFD700] text-lg mb-2" style={{ fontFamily: 'VT323, monospace', letterSpacing: '0.1em' }}>
+                  AI GENERATES
+                </h3>
+                <p className="text-white/60 text-sm" style={{ fontFamily: 'VT323, monospace' }}>
+                  OpenAI crafts a custom thumbnail with &quot;Ben The Villager&quot; branding
+                </p>
+              </div>
+
+              <div className="step-card mc-panel p-6 text-center animate-fade-in-delay-3">
+                <div className="w-14 h-14 mx-auto mb-4 bg-gradient-to-br from-[#FFD700] to-[#E87E04] flex items-center justify-center" style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}>
+                  <span className="text-[#1a1a2e] font-bold text-2xl">3</span>
+                </div>
+                <h3 className="font-bold text-[#FFD700] text-lg mb-2" style={{ fontFamily: 'VT323, monospace', letterSpacing: '0.1em' }}>
+                  DOWNLOAD
+                </h3>
+                <p className="text-white/60 text-sm" style={{ fontFamily: 'VT323, monospace' }}>
+                  Save the thumbnail or regenerate until you find the perfect one
+                </p>
+              </div>
+            </section>
+          )}
+
+          {/* Decorative Minecraft blocks */}
+          <div className="fixed bottom-0 left-0 right-0 h-16 pointer-events-none z-0 overflow-hidden opacity-30">
+            <div className="flex">
+              {Array.from({ length: 30 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="w-16 h-16 flex-shrink-0"
+                  style={{
+                    background: i % 3 === 0
+                      ? 'linear-gradient(180deg, #5D9B47 0%, #4A8039 40%, #8B6914 40%, #725510 100%)'
+                      : i % 3 === 1
+                      ? 'linear-gradient(180deg, #4A8039 0%, #3D6B2E 40%, #725510 40%, #5A440D 100%)'
+                      : 'linear-gradient(180deg, #5D9B47 0%, #4A8039 50%, #8B6914 50%, #6B500F 100%)',
+                    borderRight: '2px solid rgba(0,0,0,0.3)',
+                    borderTop: '2px solid rgba(255,255,255,0.1)',
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <footer className="relative z-10 border-t-4 border-[#FFD700]/20 mt-16 py-6 text-center bg-[#1a1a2e]/80 backdrop-blur-sm">
+          <div className="flex items-center justify-center gap-2">
+            <span className="text-2xl bee-icon">&#x1F41D;</span>
+            <p className="text-[#FFD700]/60" style={{ fontFamily: 'VT323, monospace', letterSpacing: '0.1em' }}>
+              BENTHEVILLAGER&apos;S THUMBNAIL GENERATOR
+            </p>
+            <span className="text-2xl bee-icon" style={{ animationDelay: '1s' }}>&#x1F41D;</span>
+          </div>
+          <p className="text-white/30 text-xs mt-2" style={{ fontFamily: 'VT323, monospace' }}>
+            Built with Next.js &amp; OpenAI
+          </p>
+        </footer>
+      </div>
     </main>
   );
 }

@@ -1,22 +1,13 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
-
 export const metadata: Metadata = {
-  title: "BenTheVillager's Thumbnail Generator",
+  title: "BenTheVillager's Thumbnail Generator | Minecraft Hive Style",
   description:
-    "AI-powered YouTube thumbnail generator with Ben The Villager branding. Paste a YouTube URL and get a custom thumbnail.",
+    "AI-powered YouTube thumbnail generator with Ben The Villager branding. Paste a YouTube URL and get a custom Minecraft Hive-themed thumbnail.",
+  icons: {
+    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐝</text></svg>",
+  },
 };
 
 export default function RootLayout({
@@ -26,9 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className="antialiased">
         {children}
       </body>
     </html>

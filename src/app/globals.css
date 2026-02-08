@@ -1,13 +1,415 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=Silkscreen:wght@400;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #030712;
-  --foreground: #f9fafb;
+  --hive-yellow: #FFD700;
+  --hive-gold: #F5A623;
+  --hive-orange: #E87E04;
+  --hive-dark: #1a1a2e;
+  --hive-darker: #0f0f1a;
+  --minecraft-grass: #5D9B47;
+  --minecraft-dirt: #8B6914;
+  --minecraft-stone: #7F7F7F;
+  --honeycomb-bg: #2a2a3e;
+}
+
+* {
+  image-rendering: pixelated;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  font-family: 'Silkscreen', cursive;
+  background: var(--hive-darker);
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* Minecraft-style pixelated scrollbar */
+::-webkit-scrollbar {
+  width: 16px;
+  background: var(--hive-darker);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--hive-yellow) 0%, var(--hive-gold) 100%);
+  border: 4px solid var(--hive-darker);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--hive-orange);
+}
+
+/* Animated honeycomb background */
+.honeycomb-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, rgba(245, 166, 35, 0.06) 0%, transparent 50%),
+    var(--hive-darker);
+}
+
+.honeycomb-bg::before {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'%3E%3Cpath d='M28 66L0 50L0 16L28 0L56 16L56 50L28 66ZM28 100L0 84L0 66L28 50L56 66L56 84L28 100Z' fill='%23FFD700' fill-opacity='0.03'/%3E%3C/svg%3E");
+  background-size: 56px 100px;
+  animation: honeycomb-drift 60s linear infinite;
+}
+
+@keyframes honeycomb-drift {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(-56px, -100px) rotate(2deg); }
+}
+
+/* Floating particles (bees, pollen) */
+.particle-field {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  font-size: 24px;
+  animation: float-particle 15s ease-in-out infinite;
+  opacity: 0.6;
+  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
+}
+
+.particle:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 18s; }
+.particle:nth-child(2) { left: 20%; animation-delay: 3s; animation-duration: 22s; }
+.particle:nth-child(3) { left: 35%; animation-delay: 6s; animation-duration: 16s; }
+.particle:nth-child(4) { left: 50%; animation-delay: 2s; animation-duration: 20s; }
+.particle:nth-child(5) { left: 65%; animation-delay: 8s; animation-duration: 19s; }
+.particle:nth-child(6) { left: 80%; animation-delay: 4s; animation-duration: 21s; }
+.particle:nth-child(7) { left: 90%; animation-delay: 7s; animation-duration: 17s; }
+
+@keyframes float-particle {
+  0%, 100% {
+    transform: translateY(100vh) rotate(0deg) scale(1);
+    opacity: 0;
+  }
+  10% { opacity: 0.6; }
+  50% {
+    transform: translateY(40vh) rotate(180deg) scale(1.2);
+    opacity: 0.8;
+  }
+  90% { opacity: 0.6; }
+  100% {
+    transform: translateY(-10vh) rotate(360deg) scale(1);
+    opacity: 0;
+  }
+}
+
+/* Minecraft block-style border */
+.mc-border {
+  border: 4px solid;
+  border-image: linear-gradient(180deg,
+    var(--hive-yellow) 0%,
+    var(--hive-gold) 50%,
+    var(--hive-orange) 100%
+  ) 1;
+  box-shadow:
+    inset 4px 4px 0 rgba(255, 255, 255, 0.2),
+    inset -4px -4px 0 rgba(0, 0, 0, 0.3),
+    8px 8px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* Minecraft button style */
+.mc-button {
+  position: relative;
+  background: linear-gradient(180deg,
+    #7B7B7B 0%,
+    #555555 50%,
+    #3D3D3D 100%
+  );
+  border: 4px solid;
+  border-color: #FFFFFF #555555 #555555 #FFFFFF;
+  padding: 12px 24px;
+  font-family: 'VT323', monospace;
+  font-size: 1.25rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #FFD700;
+  text-shadow: 2px 2px 0 #000, -1px -1px 0 #000;
+  transition: all 0.1s;
+  cursor: pointer;
+}
+
+.mc-button:hover:not(:disabled) {
+  background: linear-gradient(180deg,
+    #8B8B8B 0%,
+    #656565 50%,
+    #4D4D4D 100%
+  );
+  transform: scale(1.02);
+}
+
+.mc-button:active:not(:disabled) {
+  border-color: #555555 #FFFFFF #FFFFFF #555555;
+  transform: scale(0.98);
+}
+
+.mc-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.mc-button-primary {
+  background: linear-gradient(180deg,
+    var(--hive-yellow) 0%,
+    var(--hive-gold) 50%,
+    var(--hive-orange) 100%
+  );
+  border-color: #FFE770 #996300 #996300 #FFE770;
+  color: #1a1a2e;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.mc-button-primary:hover:not(:disabled) {
+  background: linear-gradient(180deg,
+    #FFE347 0%,
+    var(--hive-yellow) 50%,
+    var(--hive-gold) 100%
+  );
+}
+
+.mc-button-green {
+  background: linear-gradient(180deg,
+    #5BC236 0%,
+    #4CAF50 50%,
+    #388E3C 100%
+  );
+  border-color: #7CFF47 #275F14 #275F14 #7CFF47;
+  color: #fff;
+}
+
+.mc-button-green:hover:not(:disabled) {
+  background: linear-gradient(180deg,
+    #6BD246 0%,
+    #5CBF60 50%,
+    #489E4C 100%
+  );
+}
+
+/* Minecraft input style */
+.mc-input {
+  background: linear-gradient(180deg, #1a1a1a 0%, #2a2a2a 100%);
+  border: 4px solid;
+  border-color: #555555 #FFFFFF #FFFFFF #555555;
+  padding: 12px 16px;
+  font-family: 'VT323', monospace;
+  font-size: 1.25rem;
+  color: #FFD700;
+  caret-color: var(--hive-yellow);
+}
+
+.mc-input::placeholder {
+  color: #666;
+}
+
+.mc-input:focus {
+  outline: none;
+  border-color: var(--hive-gold) var(--hive-yellow) var(--hive-yellow) var(--hive-gold);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+/* Minecraft panel style */
+.mc-panel {
+  background: linear-gradient(180deg,
+    rgba(42, 42, 62, 0.95) 0%,
+    rgba(26, 26, 46, 0.98) 100%
+  );
+  border: 4px solid;
+  border-color: #555555 #1a1a2e #1a1a2e #555555;
+  box-shadow:
+    inset 2px 2px 0 rgba(255, 255, 255, 0.05),
+    inset -2px -2px 0 rgba(0, 0, 0, 0.3),
+    0 8px 32px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+}
+
+/* Glowing text */
+.glow-text {
+  color: var(--hive-yellow);
+  text-shadow:
+    0 0 10px rgba(255, 215, 0, 0.8),
+    0 0 20px rgba(255, 215, 0, 0.6),
+    0 0 30px rgba(255, 215, 0, 0.4),
+    2px 2px 0 #000;
+}
+
+/* Pixelated image container */
+.pixel-frame {
+  position: relative;
+  border: 8px solid transparent;
+  background:
+    linear-gradient(var(--hive-darker), var(--hive-darker)) padding-box,
+    linear-gradient(135deg,
+      var(--hive-yellow) 0%,
+      var(--hive-gold) 25%,
+      var(--hive-orange) 50%,
+      var(--hive-gold) 75%,
+      var(--hive-yellow) 100%
+    ) border-box;
+  box-shadow:
+    inset 0 0 0 4px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(255, 215, 0, 0.3);
+}
+
+.pixel-frame::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  background:
+    linear-gradient(90deg, transparent 0%, transparent 12.5%, var(--hive-yellow) 12.5%, var(--hive-yellow) 25%, transparent 25%, transparent 37.5%, var(--hive-gold) 37.5%, var(--hive-gold) 50%, transparent 50%, transparent 62.5%, var(--hive-orange) 62.5%, var(--hive-orange) 75%, transparent 75%, transparent 87.5%, var(--hive-gold) 87.5%, var(--hive-gold) 100%);
+  background-size: 32px 8px;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+/* Animated loading spinner - Minecraft style */
+.mc-spinner {
+  width: 48px;
+  height: 48px;
+  position: relative;
+}
+
+.mc-spinner::before,
+.mc-spinner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--hive-yellow);
+}
+
+.mc-spinner::before {
+  animation: mc-spin 0.8s steps(8) infinite;
+  clip-path: polygon(45% 0%, 55% 0%, 55% 100%, 45% 100%);
+}
+
+.mc-spinner::after {
+  animation: mc-spin 0.8s steps(8) infinite reverse;
+  clip-path: polygon(0% 45%, 100% 45%, 100% 55%, 0% 55%);
+  animation-delay: 0.4s;
+}
+
+@keyframes mc-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Step card hover effect */
+.step-card {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.step-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255, 215, 0, 0.1) 50%,
+    transparent 100%
+  );
+  transition: left 0.5s ease;
+}
+
+.step-card:hover::before {
+  left: 100%;
+}
+
+.step-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(255, 215, 0, 0.2);
+}
+
+/* Title animation */
+@keyframes title-glow {
+  0%, 100% {
+    text-shadow:
+      0 0 10px rgba(255, 215, 0, 0.8),
+      0 0 20px rgba(255, 215, 0, 0.6),
+      0 0 30px rgba(255, 215, 0, 0.4),
+      4px 4px 0 #000;
+  }
+  50% {
+    text-shadow:
+      0 0 20px rgba(255, 215, 0, 1),
+      0 0 40px rgba(255, 215, 0, 0.8),
+      0 0 60px rgba(255, 215, 0, 0.6),
+      4px 4px 0 #000;
+  }
+}
+
+.title-animated {
+  animation: title-glow 3s ease-in-out infinite;
+}
+
+/* Bee icon */
+.bee-icon {
+  display: inline-block;
+  animation: bee-hover 2s ease-in-out infinite;
+}
+
+@keyframes bee-hover {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(-8px) rotate(5deg); }
+}
+
+/* Error shake animation */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+.error-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Fade in animation */
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+.animate-fade-in-delay-1 {
+  animation: fade-in-up 0.6s ease-out 0.1s forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-delay-2 {
+  animation: fade-in-up 0.6s ease-out 0.2s forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-delay-3 {
+  animation: fade-in-up 0.6s ease-out 0.3s forwards;
+  opacity: 0;
 }
